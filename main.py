@@ -17,7 +17,10 @@ def get_StreamerId(query):
     headers = {'client-id' : client_id, 'Authorization':token}
     page = requests.get("https://api.twitch.tv/helix/search/channels?query={}".format(query), headers=headers)
     soup=BeautifulSoup(page.text, 'lxml')
-    return json.loads(soup.select('p')[0].text)['data'][0]['id']
+    try:
+        return json.loads(soup.select('p')[0].text)['data'][0]['id']
+    except:
+        return 0
 
 def get_Video(streamerID):
     headers = {'client-id' : client_id, 'Authorization':token}
@@ -27,6 +30,9 @@ def get_Video(streamerID):
 
 def get_VideoUrl(query):
     streamerID = get_StreamerId(query)
+    if streamerID == 0:
+        print("없음")
+        exit(0)
     videos = get_Video(streamerID)
     streamDate = []
     m3u8Src = []
