@@ -62,4 +62,5 @@ while True:
         continue
 title = re.search(r'(\d+-\d+-\d+)', streamDate[select]).group() + " " + title[select]
 title = title.rstrip().replace(" ", "_")
+#os.system("streamlink hls://{} best -o {}.mp4".format(m3u8Src[select], title))  //다운로드용 코드
 print(title+"\n"+m3u8Src[select])
